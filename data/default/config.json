@@ -1,0 +1,99 @@
+{
+    "title" : "Fritz_Haber",
+    "graph" : {
+        "linkDistance" : 300,
+        "charge"       : -600,
+        "height"       : 1300,
+        "numColors"    : 12,
+        "labelPadding" : {
+            "left"   : 5,
+            "right"  : 5,
+            "top"    : 4,
+            "bottom" : 4
+        },
+        "labelMargin" : {
+            "left"   : 5,
+            "right"  : 5,
+            "top"    : 4,
+            "bottom" : 4
+        },
+        "ticksWithoutCollisions" : 30
+    },
+    "types" : {
+        "Person"        : {
+            "short" : "Person",
+            "long"  : "Person"
+        },
+        "Thing"       : {
+            "short" : "Thing",
+            "long"  : "Thing"
+        },
+        "City"       : {
+            "short" : "City",
+            "long"  : "City"
+        },
+        "Country"       : {
+            "short" : "Country",
+            "long"  : "Country"
+        }
+        ,
+        "Field"       : {
+            "short" : "Field",
+            "long"  : "Field"
+        }    ,
+        "University"       : {
+            "short" : "University",
+            "long"  : "University"
+        },
+        "Chemichal"       : {
+            "short" : "Chemichal Reaction",
+            "long"  : "Chemichal Reaction"
+        },
+        "Organization"       : {
+            "short" : "Organization",
+            "long"  : "Organization"
+        },
+        "Thing"       : {
+            "short" : "Thing",
+            "long"  : "Thing"
+        },
+        "Event"       : {
+            "short" : "Event",
+            "long"  : "Event"
+        }
+    },
+    "constraints" : [
+        {
+            "has"    : { "name" : "Fritz_Haber" },
+            "type"   : "position",
+            "y"      : 0.1,
+            "weight" : 0.7
+        },
+        {
+            "has"    : { "name" : "Chaim_Weizmann" },
+            "type"   : "position",
+            "y"      : 0.16,
+            "weight" : 0.7
+        },
+        {
+            "has"    : { "name" : "Albert_Einstein" },
+            "type"   : "position",
+            "y"      : 0.16,
+            "weight" : 0.7
+        },
+        {
+            "has"    : { "name" : "Clara_Immerwahr" },
+            "type"   : "position",
+            "y"      : 0.16,
+            "weight" : 0.7
+        },
+        {
+            "has"    : { "name" : "Berlin" },
+            "type"   : "position",
+            "y"      : 0.16,
+            "x"      : 0.8,
+            "weight" : 0.7
+        }
+    ]
+}
+

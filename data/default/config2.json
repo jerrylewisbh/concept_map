@@ -1,0 +1,73 @@
+{
+    "title" : "Fritz_Haber",
+    "graph" : {
+        "linkDistance" : 300,
+        "charge"       : -600,
+        "height"       : 1500,
+        "numColors"    : 12,
+        "labelPadding" : {
+            "left"   : 5,
+            "right"  : 5,
+            "top"    : 4,
+            "bottom" : 4
+        },
+        "labelMargin" : {
+            "left"   : 5,
+            "right"  : 5,
+            "top"    : 4,
+            "bottom" : 4
+        },
+        "ticksWithoutCollisions" : 300
+    },
+    "types" : {
+        "Person"        : {
+            "short" : "Person",
+            "long"  : "Person"
+        },
+        "Thing"       : {
+            "short" : "Thing",
+            "long"  : "Thing"
+        },
+        "City"       : {
+            "short" : "City",
+            "long"  : "City"
+        },
+        "Country"       : {
+            "short" : "Country",
+            "long"  : "Country"
+        }
+        ,
+        "Field"       : {
+            "short" : "Field",
+            "long"  : "Field"
+        }    ,
+        "University"       : {
+            "short" : "University",
+            "long"  : "University"
+        },
+        "Chemichal"       : {
+            "short" : "Chemichal Reaction",
+            "long"  : "Chemichal Reaction"
+        },
+        "Organization"       : {
+            "short" : "Organization",
+            "long"  : "Organization"
+        },
+        "Thing"       : {
+            "short" : "Thing",
+            "long"  : "Thing"
+        },
+        "Event"       : {
+            "short" : "Event",
+            "long"  : "Event"
+        }
+    },
+    "constraints" : [
+        {
+            "has"    : { "name" : "SASProject.egp" },
+            "type"   : "position",
+            "x"      : 0.15,
+            "weight" : 0.7
+        }
+    ]
+}

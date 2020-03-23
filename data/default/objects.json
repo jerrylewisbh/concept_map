@@ -1,0 +1,249 @@
+[
+    {
+        "type"    : "person",
+        "name"    : "Fritz_Haber",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "person",
+        "name"    : "Chaim_Weizmann",
+        "depends" : [
+
+        ]
+    },
+
+      {
+        "type"    : "person",
+        "name"    : "Carl_Bosch",
+        "depends" : [
+
+        ]
+    },
+
+      {
+        "type"    : "person",
+        "name"    : "Clara_Immerwahr",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "person",
+        "name"    : "Robert_Bunsen",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "person",
+        "name"    : "Wilhelm_Ostwald",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "person",
+        "name"    : "Albert_Einstein",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "person",
+        "name"    : "Max_Born",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "person",
+        "name"    : "Carl_Theodore_Liebermann",
+        "depends" : [
+
+        ]
+    },
+
+      {
+        "type"    : "city",
+        "name"    : "Wrocław",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "city",
+        "name"    : "Berlin",
+        "depends" : [
+            "Humboldt_University_of_Berlin","Humboldt_University_of_Berlin","Kingdom_of_Prussia","Technical_University_of_Berlin" ,"Carl_Theodore_Liebermann","Carl_Theodore_Liebermann"
+        ]
+    },
+      {
+        "type"    : "city",
+        "name"    : "Karlsruhe",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "city",
+        "name"    : "Breslau",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "city",
+        "name"    : "Basel",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    } ,
+    {
+        "type"    : "country",
+        "name"    : "Germany",
+        "depends" : [
+
+        ]
+    }
+    ,
+      {
+        "type"    : "country",
+        "name"    : "Germany",
+        "depends" : [
+
+        ]
+    },
+      {
+        "type"    : "country",
+        "name"    : "Kingdom_of_Prussia",
+        "depends" : [
+            "Albert_Einstein", "Clara_Immerwahr", "Fritz_Haber"
+        ]
+    }
+,
+      {
+        "type"    : "university",
+        "name"    : "ETH_Zurich",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "Berlin_Institute_of_Technology",
+        "depends" : [
+
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "University_of_Heidelberg",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "Karlsruhe_Institute_of_Technology",
+        "depends" : [
+
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "Humboldt_University_of_Berlin",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "Technical_University_of_Berlin",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "university",
+        "name"    : "University_of_Karlsruhe",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "Chemichal Reaction",
+        "name"    : "Explosives",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "Chemichal Reaction",
+        "name"    : "Haber–Weiss_reaction",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "Chemichal Reaction",
+        "name"    : "Fertilizer",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "organization",
+        "name"    : "Born-Haber_cycle",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }
+    ,
+      {
+        "type"    : "thing",
+        "name"    : "Haber_process",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    }  ,
+      {
+        "type"    : "thing",
+        "name"    : "Chemical_warfare",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "event",
+        "name"    : "Second_Battle_of_Ypres",
+        "depends" : [
+            "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "field",
+        "name"    : "Chemist",
+        "depends" : [
+            "Chaim_Weizmann", "Robert_Bunsen", "Wilhelm_Ostwald", "Clara_Immerwahr", "Carl_Bosch", "Fritz_Haber"
+        ]
+    },
+      {
+        "type"    : "field",
+        "name"    : "Physical_chemistry",
+        "depends" : [
+            "Fritz_Haber"   
+        ]
+    }
+
+]
