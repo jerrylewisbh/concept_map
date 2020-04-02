@@ -50,9 +50,9 @@ function get_html_docs($obj) {
         $id_string = get_id_string($name);
         $name_esc  = str_replace('_', '\_', $name);
         $class     = 'select-object';
-        if (!isset($data[$name])) {
+        if (!isset($data[$name]["object"])) {
             $class .= ' missing';
-            $errors[] = "Object '$obj[name]' links to unrecognized object '$name'";
+            //$errors[] = "Object '$obj[name]' links to unrecognized object '$name'";
         }
         $markdown .= "<a href=\"#$id_string\" class=\"$class\" data-name=\"$name\">$name_esc</a>";
         $markdown .= $pieces[1];
@@ -103,14 +103,19 @@ function read_data() {
         $data[$obj['name']] = $obj;
     }
 
+
     foreach ($data as &$obj) {
         $obj['dependedOnBy'] = array();
     }
+
+
     unset($obj);
+
     foreach ($data as &$obj) {
         foreach ($obj['depends'] as $name) {
-            if ($data[$name]) {
-                $data[$name]['dependedOnBy'][] = $obj['name'];
+
+            if ($data[$name["object"]]) {
+                $data[$name["object"]]['dependedOnBy'][] = $obj['name'];
             } else {
                 $errors[] = "Unrecognized dependency: '$obj[name]' depends on '$name'";
             }

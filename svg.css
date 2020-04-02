@@ -16,6 +16,10 @@ marker#end {
     stroke-width: 1.5px;
 }
 
+.linklabelholder{
+    fill: none;
+}
+
 .node rect {
     stroke-width: 1.5px;
     
