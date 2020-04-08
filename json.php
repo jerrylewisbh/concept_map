@@ -1,7 +1,6 @@
 <?php
 require_once 'common.php';
-connectNeo4J();
-read_data();
+read_data($_GET['dataset'],$_GET['dataset_qs']);
 
 header('Content-type: application/json');
 echo json_encode(array(

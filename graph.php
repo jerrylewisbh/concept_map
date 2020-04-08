@@ -1,19 +1,7 @@
 <?php
-session_start();
-/*session is started if you don't write this line can't use $_Session  global variable*/
-/*$_SESSION["dataset_qs"] = $_POST['dataset_qs'];
-$_SESSION["dataset"] = "default/";
-$_SESSION["complLevel"] = $_POST['complLevel'];
-$_SESSION["label"] = $_POST['dataset_qs']."_Wiki_N2";*/
-
-$_SESSION["dataset_qs"] = "Fritz_Haber";
-$_SESSION["dataset"] = "default";
-$_SESSION["complLevel"] = "1";
-$_SESSION["label"] = "Fritz_Haber_Wiki_N2";
-//print_r($_SESSION);
-
 require_once 'common.php';
 read_config();
+connectNeo4J();
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->

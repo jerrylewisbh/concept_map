@@ -1,4 +1,5 @@
 <?php
+$dataset_qs = '';
 error_reporting(E_ALL & ~E_NOTICE);
 require_once 'markdown/Markdown.inc.php';
 
@@ -108,20 +109,25 @@ function get_id_string($name)
 
 function read_config()
 {
-    global $config;
-
-    $config = json_decode(file_get_contents("data/".$_SESSION['dataset']."/config.json"), true);
-    $config['jsonUrl'] = "json.php";
+    global $config, $dataset_qs;
+    session_start();
+    /*session is started if you don't write this line can't use $_Session  global variable*/
+    $_SESSION["dataset_qs"] = $_POST['dataset_qs'];
+    $_SESSION["dataset"] = "default";
+    $_SESSION["complLevel"] = $_POST['complLevel'];
+    $_SESSION["label"] = $_POST['dataset_qs']."_Wiki_N2";
+    $config = json_decode(file_get_contents("data/default/config.json"), true);
+    $config['jsonUrl'] = "json.php?dataset=".$_SESSION['dataset']."&dataset_qs=".$_SESSION['dataset_qs'];
 }
 
-function read_data()
+function read_data($dataset, $dataset_qs)
 {
     global $config, $data, $errors;
     if (!$config) read_config();
 
-    $json = json_decode(file_get_contents("data/" . $_SESSION['dataset'] ."/". $_SESSION['dataset_qs'] .".json"), true);
+    $json = json_decode(file_get_contents("data/" . $dataset ."/". $dataset_qs .".json"), true);
 
-    //$json = json_decode(file_get_contents("data/" . $_SESSION['dataset'] . $_SESSION['dataset_qs'] .".json"), true);
+    //$json = json_decode(file_get_contents("data/default/Fritz_Haber.json"), true);
     $data = array();
     $errors = array();
 
