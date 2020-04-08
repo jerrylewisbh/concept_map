@@ -1,5 +1,6 @@
 <?php
 require_once 'common.php';
+connectNeo4J();
 read_data();
 
 header('Content-type: application/json');

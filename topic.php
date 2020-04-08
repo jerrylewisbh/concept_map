@@ -1,20 +1,3 @@
-<?php
-session_start();
-/*session is started if you don't write this line can't use $_Session  global variable*/
-/*$_SESSION["dataset_qs"] = $_POST['dataset_qs'];
-$_SESSION["dataset"] = "default/";
-$_SESSION["complLevel"] = $_POST['complLevel'];
-$_SESSION["label"] = $_POST['dataset_qs']."_Wiki_N2";*/
-
-$_SESSION["dataset_qs"] = "Fritz_Haber";
-$_SESSION["dataset"] = "default";
-$_SESSION["complLevel"] = "1";
-$_SESSION["label"] = "Fritz_Haber_Wiki_N2";
-//print_r($_SESSION);
-
-require_once 'common.php';
-read_config();
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
@@ -23,7 +6,7 @@ read_config();
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta charset="utf-8">
-        <title><?php echo $config['title']; ?></title>
+        <title>Concept Map</title>
         <link rel="stylesheet" href="bootstrap.css">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="svg.css">
@@ -37,16 +20,29 @@ read_config();
         </div>
         <![endif]-->
         <div id="split-container">
-            <a class="btn btn-default nav-button disabled" id="nav-list" href="list.php?dataset=<?php echo $_SESSION['dataset_qs']; ?>">
-                View list
-            </a>
-            <div id="graph-container">
-                <div id="graph"></div>
-            </div>
-            <div id="docs-container">
-                <a id="docs-close" href="#">&times;</a>
-                <div id="docs" class="docs"></div>
-            </div>
+            <div class="container">
+			<form action="graph.php" method="post">
+			  <div class="form-group">
+				<label for="exampleFormControlSelect1">Topic</label>
+			  <select class="form-control" name="dataset_qs" weight="60%">
+				  <option value="Fritz_Haber">Fritz Haber</option>
+                  <option value="Carl_Bosch">Carl Bosch</option>
+                  <option value="Albert_Einstein">Albert Einstein</option>
+				  <option value="Database">Database</option>
+			  </select>
+ <br />
+                <label>Complexity level</label>
+                <label class="radio-inline"><input type="radio" name="complLevel"  value="1" checked>Level 1</label>
+                <label class="radio-inline"><input type="radio" name="complLevel" value="2">Level 2</label>
+                <label class="radio-inline"><input type="radio" name="complLevel" value="3">Level 3</label>
+                <label class="radio-inline"><input type="radio" name="complLevel" value="4">Level 3</label>
+              </div>
+			  <input type="submit" class="btn btn-primary">
+			</form>
+		</div>
+			
+            
+			
         </div>
         <script src="jquery/jquery-1.10.2.min.js"></script>
         <script src="jquery/jquery.browser.min.js"></script>
@@ -56,6 +52,9 @@ read_config();
         <script>
             var config = <?php echo json_encode($config); ?>;
         </script>
-        <script src="script.js"></script>
+		
+		
     </body>
+	
+	
 </html>

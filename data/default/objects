@@ -21,12 +21,12 @@
 
       ]
   },
+
     {
       "type"    : "person",
       "name"    : "Clara_Immerwahr",
       "depends" : [
-          {"type":"Relação aqui",  "object":"Fritz_Haber"},
-          {"type":"3",  "object":"Carl_Bosch"}
+          {"type":"Relação aqui",  "object":"Fritz_Haber"}
       ]
   }
   ,
