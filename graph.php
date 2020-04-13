@@ -1,7 +1,15 @@
 <?php
 require_once 'common.php';
 read_config();
-connectNeo4J();
+
+include('Neo4J.php');
+
+spl_autoload_register(function ($class_name) {
+    include $class_name . '.php';
+});
+
+$neo4J  = new Neo4J();
+$neo4J->getGraphNeo4J();
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->

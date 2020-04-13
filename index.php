@@ -26,8 +26,13 @@
                 <label for="exampleFormControlSelect1">Topic</label>
                 <select class="form-control" name="dataset_qs" weight="60%">
                     <option value="Fritz_Haber">Fritz Haber</option>
-                    <option value="Carl_Bosch">Carl Bosch</option>
+                    <option value="Carl_Bosch" selected>Carl Bosch</option>
                     <option value="Albert_Einstein">Albert Einstein</option>
+                    <option value="World_War_I">World_War_I</option>
+                    <option value="World_War_II">World_War_II</option>
+                    <option value="Barack_Obama">Barack_Obama</option>
+                    <option value="Nelson_Mandela">Nelson_Mandela</option>
+                    <option value="Cold_War">Cold_War</option>
                     <option value="Database">Database</option>
                 </select>
                 <br />
@@ -36,6 +41,10 @@
                 <label class="radio-inline"><input type="radio" name="complLevel" value="2">Level 2</label>
                 <label class="radio-inline"><input type="radio" name="complLevel" value="3">Level 3</label>
                 <label class="radio-inline"><input type="radio" name="complLevel" value="4">Level 3</label>
+
+                <label>Concept Map type</label>
+                <label class="radio-inline"><input type="radio" name="mapType"  value="Conceptual">Conceptual</label>
+                <label class="radio-inline"><input type="radio" name="mapType" value="Hierarchical">Hierarchical</label>
             </div>
             <input type="submit" class="btn btn-primary">
         </form>

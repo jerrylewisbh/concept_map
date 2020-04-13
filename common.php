@@ -5,44 +5,15 @@ require_once 'markdown/Markdown.inc.php';
 
 use \Michelf\Markdown;
 
-function connectNeo4J()
-{
-    $username = 'neo4j';
-    $password = 's08o07l01';
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://localhost:7474/db/data/cypher");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_HEADER, true);
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-
-    curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
-    $query = [
-        "query" => "CALL apoc.export.json.query(\"MATCH path=(n:$_SESSION[label])-[r]->(p:$_SESSION[label])
-MATCH (m:$_SESSION[label]{name:'$_SESSION[dataset_qs]'}) where (toUpper(n.name) <> toUpper(p.name)) and
- ((n.communityLouvain = m.communityLouvain) or (n.pathlenght = $_SESSION[complLevel]) or ((toInt(n.relevanceByPageRank) = $_SESSION[complLevel]) and 
- (toInt(p.relevanceByPageRank) = $_SESSION[complLevel])) and ((toInt(n.relevanceBytfidf) = $_SESSION[complLevel]) and (toInt(p.relevanceBytfidf) = $_SESSION[complLevel]))) 
- return collect(path) as list\", '../../wamp64/www/concept_map/data/default/$_SESSION[dataset_qs].json')"];
-
-    $query = json_encode($query);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json; ', 'Content-Type: application/json', 'Content-Length: ' . strlen($query), 'X-Stream: true'));
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
-
-    $result = curl_exec($ch);
-    $response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-}
-
 function get_html_docs($obj)
 {
     global $config, $data, $errors;
 
     $name = str_replace('/', '_', $obj['name']);
-    $filename = "data/".$_SESSION['dataset']."/".$_SESSION['dataset_qs']."/$name.mkdn";
+    //$filename = "data/".$_SESSION['dataset']."/".$_SESSION['dataset_qs']."/$name.mkdn";
 
     $name = str_replace('_', '\_', $obj['name']);
+    $abstract = str_replace('_', '\_', $obj['abstract']);
     $type = $obj['type'];
     if ($config['types'][$type]) {
         $type = $config['types'][$type]['long'];
@@ -50,17 +21,17 @@ function get_html_docs($obj)
 
     $markdown = "## $name *$type*\n\n";
 
-    if (file_exists($filename)) {
+    if (!is_null($abstract)) {
         $markdown .= "### Documentation\n\n";
-        $markdown .= file_get_contents($filename);
+        $markdown .= "<div class=\"alert alert-warning\">$abstract</div>";
     } else {
         $markdown .= "<div class=\"alert alert-warning\">No documentation for this object</div>";
     }
 
     if ($obj) {
         $markdown .= "\n\n";
-        $markdown .= get_depends_markdown('Depends on', $obj['depends']);
-        $markdown .= get_depends_markdown('Depended on by', $obj['dependedOnBy']);
+        $markdown .= get_depends_markdown('Depends on', $obj['depends'], $obj['name']);
+        $markdown .= get_depends_markdown('Depended on by', $obj['dependedOnBy'], $obj['name']);
     }
 
     // Use {{object_id}} to link to an object
@@ -87,14 +58,21 @@ function get_html_docs($obj)
     return $html;
 }
 
-function get_depends_markdown($header, $arr)
+function get_depends_markdown($header, $arr, $nameC)
 {
     $markdown = "### $header";
     if (count($arr)) {
         $markdown .= "\n\n";
-        foreach ($arr as $name) {
-            $markdown .= "* {{" . $name . "}}\n";
+        if($header == "Depended on by"){
+            foreach ($arr as $name) {
+                $markdown .= "* [{$name['type']}] {{" . $name['object']."}}  \n";
+            }
+        }else{
+            foreach ($arr as $name) {
+                $markdown .= "* {{" . $name['object']."}} [{$name['type']}] '{$nameC}' \n";
+            }
         }
+
         $markdown .= "\n";
     } else {
         $markdown .= " *(none)*\n\n";
@@ -115,45 +93,57 @@ function read_config()
     $_SESSION["dataset_qs"] = $_POST['dataset_qs'];
     $_SESSION["dataset"] = "default";
     $_SESSION["complLevel"] = $_POST['complLevel'];
+    $_SESSION["mapType"] = $_POST['mapType'];
     $_SESSION["label"] = $_POST['dataset_qs']."_Wiki_N2";
     $config = json_decode(file_get_contents("data/default/config.json"), true);
-    $config['jsonUrl'] = "json.php?dataset=".$_SESSION['dataset']."&dataset_qs=".$_SESSION['dataset_qs'];
+    $config['jsonUrl'] = "json.php?dataset=".$_SESSION['dataset']."&dataset_qs=".$_SESSION['dataset_qs']."&mapType=".$_SESSION['mapType'];
 }
 
-function read_data($dataset, $dataset_qs)
+function read_data($dataset, $dataset_qs,$mapType)
 {
     global $config, $data, $errors;
     if (!$config) read_config();
 
-    $json = json_decode(file_get_contents("data/" . $dataset ."/". $dataset_qs .".json"), true);
+    //$json = json_decode(file_get_contents("data/" . $dataset ."/". $dataset_qs ."_".$mapType.".json"), true);
 
-    //$json = json_decode(file_get_contents("data/default/Fritz_Haber.json"), true);
+    $json = json_decode(file_get_contents("data/default/Carl_Bosch_Conceptual.json"), true);
     $data = array();
     $errors = array();
-
+    $a = 2;
     //print_r($_SESSION);
     foreach ($json['list'] as $obj) {
         $idS = strtoupper($obj['nodes'][0]['id']);
         $nameS = strtoupper($obj['nodes'][0]['properties']['name']);
+        $abstractS = $obj['nodes'][0]['properties']['abstract'];
         $typeS = strtoupper($obj['nodes'][0]['properties']['classes'][0]);
         if (!key_exists(strtoupper($obj['nodes'][0]['properties']['name']), $data)) {
             $data[$nameS]['id'] = $idS;
+            $data[$nameS]['posY'] = $obj['nodes'][0]['properties']['pathLenght'] *(1/$obj['nodes'][0]['properties']['pagerank']) *20;
+            $data[$nameS]['posX'] = ($obj['nodes'][0]['properties']['communityLouvain'])*50 + ($a*30);
+            $data[$nameS]['weight'] = $obj['nodes'][0]['properties']['weight'];
             $data[$nameS]['name'] = $nameS;
+            $data[$nameS]['abstract'] = $abstractS;
             $data[$nameS]['type'] = $typeS;
             $data[$nameS]['depends'] = array();
         }
+        $a++;
     }
     unset($obj);
 
     foreach ($json['list'] as $obj) {
         $id = strtoupper($obj['nodes'][1]['id']);
         $name = strtoupper($obj['nodes'][1]['properties']['name']);
+        $abstract = $obj['nodes'][1]['properties']['abstract'];
         $type = strtoupper($obj['nodes'][1]['properties']['classes'][0]);
         $object = strtoupper($obj['nodes'][0]['properties']['name']);
         $rel = strtoupper($obj['rels'][0]['label']);
         if (!key_exists(strtoupper($obj['nodes'][1]['properties']['name']), $data)) {
             $data[$name]['id'] = $id;
+            $data[$name]['posY'] =  $obj['nodes'][1]['properties']['pathLenght'] * (1/$obj['nodes'][1]['properties']['pagerank']) *20;
+            $data[$name]['posX'] = ($obj['nodes'][1]['properties']['communityLouvain']) *50 + ($a * 30);
+            $data[$name]['weight'] = $obj['nodes'][1]['properties']['weight'];
             $data[$name]['name'] = $name;
+            $data[$name]['abstract'] = $abstract;
             $data[$name]['type'] = $type;
             $data[$name]['depends'] = array();
             $depends['object'] = $object;
@@ -164,6 +154,7 @@ function read_data($dataset, $dataset_qs)
             $depends['type'] = $rel;
             array_push($data[$name]['depends'], $depends);
         }
+        $a++;
     }
 
     foreach ($data as &$obj) {
@@ -176,7 +167,11 @@ function read_data($dataset, $dataset_qs)
         foreach ($obj['depends'] as $name) {
 
             if ($data[$name["object"]]) {
-                $data[$name["object"]]['dependedOnBy'][] = $obj['name'];
+                $dependedOnBy = array();
+                $dependedOnBy['object'] = $obj['name'];
+                $dependedOnBy['type'] = $name["type"];
+
+                $data[$name["object"]]['dependedOnBy'][] = $dependedOnBy;
             } else {
                 $errors[] = "Unrecognized dependency: '$obj[name]' depends on '$name'";
             }

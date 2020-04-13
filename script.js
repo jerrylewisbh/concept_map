@@ -390,7 +390,11 @@ function drawGraph() {
                 text = node.selectAll('text'),
                 bounds = {},
                 first = true;
-
+                //d.x = d.posX;
+                d.y = d.posY;
+                d.weight = d.posX;
+           // alert(d.x + "_" +d.y)
+            d.fixed = true;
             text.each(function () {
                 var box = this.getBBox();
                 if (first || box.x < bounds.x1) {
@@ -439,6 +443,11 @@ function drawGraph() {
                 top: new geo.LineSegment(bounds.x1, bounds.y1, bounds.x2, bounds.y1),
                 bottom: new geo.LineSegment(bounds.x1, bounds.y2, bounds.x2, bounds.y2)
             };
+
+            //d.x = obj.posX;
+            //d.y = obj.posY;
+            //alert(obj.name);
+            //d.weight = true;
         });
 
         graph.numTicks = 0;
